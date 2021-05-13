@@ -4,6 +4,45 @@
   
     
     <entry>
+      <title>Regular expersion in C++</title>
+      <link href="2021/05/10/Regular-expersion-in-C++/"/>
+      <url>2021/05/10/Regular-expersion-in-C++/</url>
+      
+        <content type="html"><![CDATA[<p>This post mainly talks about the grammar and usage of <code>Regular Expersion</code> in C++.</p><h1 id="Grammar"><a href="#Grammar" class="headerlink" title="Grammar"></a>Grammar</h1><p> The grammar is specified by the use of <code>std::regex_constants::syntax_option_type</code> enumeration values.They are defined in <code>std::regex_constants</code>:</p><ul><li>ECMAScript(default)</li><li>basic</li><li>extended</li><li>awk</li><li>grep</li><li>egrep<br>Only one of above grammars can be specified.</li></ul><p> Several others flags can be applied at the same time:</p><ul><li>icase</li><li>nosubs</li><li>optimize</li><li>collate<h2 id="Element"><a href="#Element" class="headerlink" title="Element"></a>Element</h2>An element can be one of the following things:</li><li>An ordinary character</li><li>A wildcard character ‘.’ that matches any character except a newline.</li><li>A bracket expression of the form “[expr]”,or of the form “[^expr]”.</li><li>An anchor ‘^’ or ‘$’.</li><li>An identity escape of the form “\k”, which matches the character k.</li></ul>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Mini Regular Expersion</title>
+      <link href="2021/05/10/Mini-Regular-Expersion/"/>
+      <url>2021/05/10/Mini-Regular-Expersion/</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Mini Regex</title>
+      <link href="2021/05/10/Mini-Regex/"/>
+      <url>2021/05/10/Mini-Regex/</url>
+      
+        <content type="html"><![CDATA[<p>MiniRegex.h define a class template to parse Mini Regular Expersion.</p><p>For more information about Mini Regular Expersion see in Mini Regular Expersion.md.</p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Hello hexo and github io!</title>
       <link href="2021/05/05/Hello-hexo-and-github-io/"/>
       <url>2021/05/05/Hello-hexo-and-github-io/</url>
