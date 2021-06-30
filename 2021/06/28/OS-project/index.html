@@ -5,8 +5,6 @@
   <!-- SEO相关 -->
   
     
-      <meta name="robots" content="noindex,follow">
-    
   
   <!-- 渲染优化 -->
   <meta http-equiv='x-dns-prefetch-control' content='on' />
@@ -24,7 +22,9 @@
 
   <!-- 页面元数据 -->
   
-  <title>Tag: helloworld - CirnoTox Blog</title>
+  <title>OS_project - CirnoTox Blog</title>
+  
+    <meta name="keywords" content="OS_project">
   
 
   
@@ -357,7 +357,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       <div id="l_cover">
   
     
-        <div id="full" class='cover-wrapper  featured' style="display: none;">
+        <div id="full" class='cover-wrapper post featured' style="display: none;">
           
             <div id='cover-backstretch'></div>
           
@@ -418,81 +418,244 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
         <div class="body-wrapper" id="pjax-container">
           
 
-
 <div class='l_main'>
+  <article class="article post white-box reveal md shadow article-type-post" id="post" itemscope itemprop="blogPost">
   
+
+
+  
+  <div class="article-meta" id="top">
     
-      
-  <section class="post-list">
     
-      
+    
+      <h1 class="title">
+        OS_project
+      </h1>
+      <div class='new-meta-box'>
         
           
+            
+<div class='new-meta-item author'>
+  <a class='author' href="/" rel="nofollow">
+    <img no-lazy src="https://cdn.jsdelivr.net/gh/CirnoTox/Blog-source@main/source/images/CirnoUserIcon.png">
+    <p>CirnoTox</p>
+  </a>
+</div>
+
+          
         
-      
-    
-    
-      
+          
+            
+
+          
         
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2021/05/05/Hello-hexo-and-github-io/">
-        Hello hexo and github io!
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
+    <p>发布于：Jun 28, 2021</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  <div class="new-meta-item browse leancloud">
+    <a class='notlink'>
       
-        hello hexo!hello github io!经典用法可以在配置文件中设置默认样式，为简单的一句话提供最的简便写法。
-note quote 适合引用一段话
-note info 默认主题色，适合中性的信息
-note warning 默认黄色，适合警告性的信息
-note error/danger 默认红色，适合危险性的信息
-note done/success 默认绿色，适合正确操作的信息...
-      
-    
+      <div id="lc-pv" data-title="OS_project" data-path="/2021/06/28/OS-project/">
+        <i class="fas fa-eye fa-fw" aria-hidden="true"></i>
+        <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span>
+        次浏览
+      </div>
+    </a>
   </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
+
+
           
-          <a class='avatar' href='/'><img src='https://cdn.jsdelivr.net/gh/CirnoTox/Blog-source@main/source/images/CirnoUserIcon.png'></a>
-        
-        <time>2021-05-05</time>
         
       </div>
+    
+  </div>
+
+
+  
+  
+  <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>今天是第18周的周三，上周末一听说操作系统课设被分配到“使用线程与条件变量实现面包师问题”，以前没学过任何C++并行的知识（毕竟太菜），就立刻去看了看C++文档，发现线程、条件变量、互斥量库一应俱全，这下就开心了。现在课设也做的差不多了，写些感悟要写到博客上。源代码：<a target="_blank" rel="noopener" href="https://github.com/CirnoTox/OS_project">https://github.com/CirnoTox/OS_project</a></p>
+<h1 id="问题说明"><a href="#问题说明" class="headerlink" title="问题说明"></a>问题说明</h1><h2 id="原题-面包师问题"><a href="#原题-面包师问题" class="headerlink" title="原题 面包师问题"></a>原题 面包师问题</h2><p>面包师有很多面包和蛋糕，由 n 个销售人员销售。每个顾客进店后先取一个号，并且等着叫号。当一个销售人员空闲下来，就叫下一个号。请分别编写销售人员和顾客进程的程序，要求使用线程与条件变量实现。</p>
+<h2 id="形式化分析"><a href="#形式化分析" class="headerlink" title="形式化分析"></a>形式化分析</h2><p>给定已有面包x个、蛋糕y个；销售人员个数n；进店顾客数量c,每个顾客购买随机个面包和蛋糕；要求销售人员们根据顾客队列进行销售，如果只剩少量面包或蛋糕，则拒绝过量购买意愿的顾客，销售结束后返回剩余面包restx与蛋糕数量resty。</p>
+<h1 id="源码说明"><a href="#源码说明" class="headerlink" title="源码说明"></a>源码说明</h1><ul>
+<li>三个主文件<code>customer.cpp</code>,<code>OS_project.cpp</code>,<code>saler.cpp</code></li>
+<li>一个辅助类<code>pcout.h</code><h2 id="队列、向量与线程创建"><a href="#队列、向量与线程创建" class="headerlink" title="队列、向量与线程创建"></a>队列、向量与线程创建</h2><code>deque</code>和<code>vector</code>有着<code>emplace_back()</code>这样的优秀成员函数，为他们传入<code>thread</code>模板参数后，<code>emplace_back()</code>可以帮助coder在向<code>deque</code>和<code>vector</code>添加数据的同时启动线程。<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 以i为参数，启动customer个customerThread线程</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">auto</span> i = <span class="number">0</span>; i &lt; customer; ++i) &#123;</span><br><span class="line">   customerThreadQ.<span class="built_in">emplace_back</span>(customerThread,i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+当然，创建线程以后一定要记得<code>join()</code>，不过就算忘了，C++也会通过报错提醒你。<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (thread&amp; t : salerThreadP) &#123;</span><br><span class="line">   t.<span class="built_in">join</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="随机数生成"><a href="#随机数生成" class="headerlink" title="随机数生成"></a>随机数生成</h2>在customerThread线程中，顾客生成数据我使用了随机数，并且让这随机数服从以(1,4)为参数伽玛分布<code>gamma_distribution&lt;&gt;</code>，具体是这样调用的<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">random_device rd;   </span><br><span class="line"><span class="function">mt19937 <span class="title">gen</span><span class="params">(rd())</span></span>;  </span><br><span class="line">gamma_distribution&lt;&gt; <span class="built_in">dist</span>(<span class="number">1</span>, <span class="number">4</span>);</span><br><span class="line"><span class="keyword">size_t</span> needCake = <span class="built_in">size_t</span>(<span class="built_in">dist</span>(gen));</span><br></pre></td></tr></table></figure>
+C++11开始，随机数有更好的调用方法，不过这不是这次课设的核心，随机数能用就行啦。<h2 id="数据上锁"><a href="#数据上锁" class="headerlink" title="数据上锁"></a>数据上锁</h2>这里涉及到多线程地向队列存取数据，所以使用锁<code>unique_lock&lt;&gt;</code>来保证数据的顺序与安全性。<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//首先要有一个公共的互斥量mutex</span></span><br><span class="line"><span class="keyword">extern</span> mutex customerDataMutex;</span><br><span class="line"><span class="comment">//上锁的基本框架</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">customerThread</span><span class="params">(<span class="keyword">size_t</span> number)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   <span class="comment">//用公共的互斥量实例化一个unique_lock</span></span><br><span class="line">   <span class="function">unique_lock&lt;mutex&gt; <span class="title">dataLock</span><span class="params">(customerDataMutex)</span></span>;</span><br><span class="line">   <span class="comment">//实例化结束后就立刻锁上了！</span></span><br><span class="line">   <span class="comment">//如果不想立刻上锁，可以在实例化时加上一个defer_lock参数，之后再用成员函数lock()上锁</span></span><br><span class="line">   ...<span class="comment">//生成数据</span></span><br><span class="line">   <span class="comment">//向队列存数据</span></span><br><span class="line">   dataQ.<span class="built_in">push</span>(vector&lt;<span class="keyword">size_t</span>&gt;&#123;number,needBread,needCake&#125;);</span><br><span class="line">   <span class="comment">//解锁</span></span><br><span class="line">   dataLock.<span class="built_in">unlock</span>();</span><br><span class="line">   ...<span class="comment">//do other things</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+值得注意的是，<code>unique_lock</code>在执行构析函数时也会自动解锁，所以一个简单的互斥线程框架是：<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mutex m;<span class="comment">//公共互斥量</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">thread</span><span class="params">()</span><span class="comment">//并行的线程</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   unique_lock&lt;mutex&gt;lock;</span><br><span class="line">   ...<span class="comment">//do othert things, 期间一直上锁，直到最终执行完毕</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="并行中的标准输出"><a href="#并行中的标准输出" class="headerlink" title="并行中的标准输出"></a>并行中的标准输出</h3>并行标准输出类<code>struct pcout</code>的原理就是借用了上述的原理。<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">inline</span> mutex cout_mutex;<span class="comment">//公共互斥量</span></span><br><span class="line">~<span class="built_in">pcout</span>() &#123;</span><br><span class="line">   lock_guard&lt;mutex&gt; l&#123; cout_mutex &#125;;<span class="comment">//上锁</span></span><br><span class="line">   cout &lt;&lt; <span class="built_in">rdbuf</span>();<span class="comment">//做输出</span></span><br><span class="line">   cout.<span class="built_in">flush</span>();<span class="comment">//刷新到屏幕</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="条件变量"><a href="#条件变量" class="headerlink" title="条件变量"></a>条件变量</h2>至少使用一次的条件变量，使用在了<code>salerThread</code>和<code>customerThread</code>两个线程的通信中。<code>customerThread</code>在生成完数据后会进入条件变量的等待wait，<code>salerThread</code>线程操作数据结束后，会提醒notify<code>customerThread</code>结束。<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//公共互斥量，条件变量，条件</span></span><br><span class="line"><span class="keyword">extern</span> mutex customerSaleFinishMutex;</span><br><span class="line"><span class="keyword">extern</span> condition_variable customerSaleFinishCV;</span><br><span class="line"><span class="keyword">extern</span> <span class="keyword">int</span> customerIdSaleFinished;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">customerThread</span><span class="params">(<span class="keyword">size_t</span> number)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   ...<span class="comment">//生成数据部分</span></span><br><span class="line">   <span class="comment">//条件变量必须与mutex和lock共同使用</span></span><br><span class="line">   <span class="function">unique_lock&lt;mutex&gt; <span class="title">saleFinishLock</span><span class="params">(customerSaleFinishMutex)</span></span>;</span><br><span class="line">   customerSaleFinishCV.<span class="built_in">wait</span>(saleFinishLock,</span><br><span class="line">   <span class="comment">//等待customerIdSaleFinished为变为当前线程序号</span></span><br><span class="line">      [&amp;]() &#123; <span class="keyword">return</span> customerIdSaleFinished==number; &#125;);</span><br><span class="line">   pcout&#123;&#125; &lt;&lt; <span class="string">&quot;Customer &quot;</span> &lt;&lt; number &lt;&lt; <span class="string">&quot; leave.\n&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">salerThread</span><span class="params">(<span class="keyword">size_t</span> number)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   <span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line">      ...<span class="comment">//do some things</span></span><br><span class="line">      <span class="function">unique_lock&lt;mutex&gt; <span class="title">salerLock</span><span class="params">(salerMutex)</span></span>;<span class="comment">//上锁</span></span><br><span class="line">      ...<span class="comment">//处理数据</span></span><br><span class="line">      <span class="comment">//提醒顾客离开</span></span><br><span class="line">      <span class="comment">//因为处理数据时有上锁，就不用担心数据访问混乱</span></span><br><span class="line">      customerIdSaleFinished = customerId;</span><br><span class="line">      <span class="comment">//notify所有顾客线程，确认条件customerIdSaleFinished情况</span></span><br><span class="line">		customerSaleFinishCV.<span class="built_in">notify_all</span>();</span><br><span class="line">      salerLock.<span class="built_in">unlock</span>();<span class="comment">//解锁</span></span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="移植到Linux"><a href="#移植到Linux" class="headerlink" title="移植到Linux"></a>移植到Linux</h1>用git获取代码，然后各个文件都要多包含一些头文件<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;mutex&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;condition_variable&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sstream&gt;</span> <span class="comment">//pcout.h下</span></span></span><br></pre></td></tr></table></figure>
+G++编译指令：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g++ -o exefile.o OS_project.cpp saler.cpp customer.cpp pcout.h -fpermissive -pthread</span><br></pre></td></tr></table></figure>
+<h1 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h1>记得上次做数据结构课设时，完全是在基础了解<code>iostream``string</code>库，60行随随便便就应付了，还好当时验收的学长没学过C++，拿了个A，现在想想真是惊险啊。经过这次认真地完成操作系统的课设，感受也是颇深：一是坚定了我未来做软件开发工程师的想法，全身心从8:00写代码到11:30，完全是进入心流状态了，结束后也要一个小时多才能平静；二是发现自己还有相当多欠缺的地方，C++并行刚开始接触，函数式编程也一点不会，有太多的需要学习，距离成为高性能计算工程师的目标还相当远啊；三是认识到概率论真该好好复习了！</li>
+</ul>
+<h1 id="拓展阅读与参考"><a href="#拓展阅读与参考" class="headerlink" title="拓展阅读与参考"></a>拓展阅读与参考</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/xiaoweiChen/CPP-17-STL-cookbook">https://github.com/xiaoweiChen/CPP-17-STL-cookbook</a> 感谢这个项目，帮助了我太多！并行详见第9章</li>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/cpp/standard-library/cpp-standard-library-reference">https://docs.microsoft.com/en-us/cpp/standard-library/cpp-standard-library-reference</a></li>
+<li><a target="_blank" rel="noopener" href="https://en.cppreference.com/w/">https://en.cppreference.com/w/</a></li>
+</ul>
+
+  
+  
+    
+    <div class='footer'>
       
-        <div>
-          <a class='readmore' href='/2021/05/05/Hello-hexo-and-github-io/'>
-            Read More
-          </a>
+      
+      
+        <div class='copyright'>
+          <blockquote>
+            
+              
+                <p>博客内容遵循 署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</p>
+
+              
+            
+              
+                <p>本文永久链接是：<a href=https://cirnotox.github.io/2021/06/28/OS-project/>https://cirnotox.github.io/2021/06/28/OS-project/</a></p>
+              
+            
+          </blockquote>
         </div>
+      
       
     </div>
   
+  
+    
 
+
+  <div class='article-meta' id="bottom">
+    <div class='new-meta-box'>
+      
+        
+          
+<div class='new-meta-item author'>
+  <a class='author' href="/" rel="nofollow">
+    <img no-lazy src="https://cdn.jsdelivr.net/gh/CirnoTox/Blog-source@main/source/images/CirnoUserIcon.png">
+    <p>CirnoTox</p>
+  </a>
 </div>
 
-          </div>
         
       
-    
-  </section>
+        
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-06-30T12:07:16+08:00">
+  <a class='notlink'>
+    <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
+    <p>更新于：Jun 30, 2021</p>
+  </a>
+</div>
+
+        
+      
+        
+          
   
-    
-  
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/OS-project/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>OS_project</p></a></div>
 
 
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
     
+      
+        <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://cirnotox.github.io/2021/06/28/OS-project/&title=OS_project - CirnoTox Blog&summary="
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/qq.png" class="lazyload" data-srcset="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/qq.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://cirnotox.github.io/2021/06/28/OS-project/&title=OS_project - CirnoTox Blog&summary="
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/qzone.png" class="lazyload" data-srcset="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/qzone.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="http://service.weibo.com/share/share.php?url=https://cirnotox.github.io/2021/06/28/OS-project/&title=OS_project - CirnoTox Blog&summary="
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/weibo.png" class="lazyload" data-srcset="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/weibo.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=">
+          
+        </a>
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+
+
+        
+      
+    </div>
+  </div>
+
+
   
+  
+
+  
+    <div class="prev-next">
+      
+      
+        <a class='next' href='/2021/06/03/MOS-Problems/'>
+          <p class='title'>MOS_Problems<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>Following answers are for reference only.
+Introduction
+What are the two main functions of an oper...</p>
+        </a>
+      
+    </div>
+  
+</article>
+
+
+  
+
+  <article class="post white-box reveal shadow" id="comments">
+    <p ct><i class='fas fa-comments'></i> 评论</p>
+    
+    <div id="valine_container" class="valine_thread">
+  <i class="fas fa-cog fa-spin fa-fw fa-2x"></i>
+</div>
+
+  </article>
+
+
+
+
+
+
 </div>
 <aside class='l_side'>
   
@@ -500,102 +663,28 @@ note done/success 默认绿色，适合正确操作的信息...
     
     
 
-<section class="widget blogger shadow desktop mobile">
-  <div class='content'>
-    
-      
-        <a class='avatar flat-box rectangle' href='/'>
-          <img no-lazy src='https://cdn.jsdelivr.net/gh/CirnoTox/Blog-source@main/source/images/CirnoUserIcon.png'/>
-        </a>
-      
-    
-    
-      <div class='text'>
-        
-          <h2>CirnoTox</h2>
-        
-        
-        
-      </div>
-    
-    
-      <div class="social-wrapper">
-        
-          
-            <a href="/about/"
-              class="social fas fa-info-circle flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-              
-            </a>
-          
-        
-          
-            <a href="mailto:zixiaochen50@gmail.com"
-              class="social fas fa-envelope flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-              
-            </a>
-          
-        
-          
-            <a href="https://github.com/CirnoTox"
-              class="social fab fa-github flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-              
-            </a>
-          
-        
-          
-            <a href="http://music.163.com/playlist?id=6748454327&amp;userid=400940159"
-              class="social fas fa-headphones-alt flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-              
-            </a>
-          
-        
-      </div>
-    
-  </div>
-</section>
 
-  
 
-  
-    
-    
-
-  
-
-  
-    
-    
-  
-
-  <section class="widget tagcloud shadow desktop mobile">
+  <section class="widget toc-wrapper shadow desktop mobile" id="toc-div" >
     
   <header>
     
-      <a href='/blog/tags/'><i class="fas fa-tags fa-fw" aria-hidden="true"></i><span class='name'>热门标签</span></a>
+      <i class="fas fa-list fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
     
   </header>
 
 
     <div class='content'>
-      <a href="/tags/OS-project/" style="font-size: 14px; color: #999">OS_project</a> <a href="/tags/Operating-System/" style="font-size: 14px; color: #999">Operating_System</a> <a href="/tags/helloworld/" style="font-size: 14px; color: #999">helloworld</a>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8E%9F%E9%A2%98-%E9%9D%A2%E5%8C%85%E5%B8%88%E9%97%AE%E9%A2%98"><span class="toc-text">原题 面包师问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BD%A2%E5%BC%8F%E5%8C%96%E5%88%86%E6%9E%90"><span class="toc-text">形式化分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%98%9F%E5%88%97%E3%80%81%E5%90%91%E9%87%8F%E4%B8%8E%E7%BA%BF%E7%A8%8B%E5%88%9B%E5%BB%BA"><span class="toc-text">队列、向量与线程创建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9A%8F%E6%9C%BA%E6%95%B0%E7%94%9F%E6%88%90"><span class="toc-text">随机数生成</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E4%B8%8A%E9%94%81"><span class="toc-text">数据上锁</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B9%B6%E8%A1%8C%E4%B8%AD%E7%9A%84%E6%A0%87%E5%87%86%E8%BE%93%E5%87%BA"><span class="toc-text">并行中的标准输出</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F"><span class="toc-text">条件变量</span></a></li></ol>
     </div>
   </section>
 
 
   
 
-  
-
 
 </aside>
+
 
 
 		  
@@ -604,8 +693,8 @@ note done/success 默认绿色，适合正确操作的信息...
 
 <script>
   window.pdata={}
-  pdata.ispage=false;
-  pdata.postTitle="";
+  pdata.ispage=true;
+  pdata.postTitle="OS_project";
   pdata.commentPath="";
   pdata.commentPlaceholder="";
   // header 这里无论是否开启pjax都需要

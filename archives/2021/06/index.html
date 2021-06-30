@@ -24,7 +24,7 @@
 
   <!-- 页面元数据 -->
   
-  <title>Tag: helloworld - CirnoTox Blog</title>
+  <title>Archive: 2021/6 - CirnoTox Blog</title>
   
 
   
@@ -106,7 +106,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <body>
     
 
-<header id="l_header" class="l_header always shadow blur show"  >
+<header id="l_header" class="l_header always shadow blur "  >
   <div class='container'>
   <div id='wrapper'>
     <div class='nav-sub'>
@@ -357,7 +357,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       <div id="l_cover">
   
     
-        <div id="full" class='cover-wrapper  featured' style="display: none;">
+        <div id="half" class='cover-wrapper  featured' style="display: ;">
           
             <div id='cover-backstretch'></div>
           
@@ -418,14 +418,14 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
         <div class="body-wrapper" id="pjax-container">
           
 
-
 <div class='l_main'>
-  
-    
-      
+	
+		
   <section class="post-list">
     
       
+        
+          
         
           
         
@@ -442,20 +442,16 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
     
     <h2 class="article-title" >
-      <a href="/2021/05/05/Hello-hexo-and-github-io/">
-        Hello hexo and github io!
+      <a href="/2021/06/28/OS-project/">
+        OS_project
       </a>
     </h2>
   
   <div class='md'>
     
       
-        hello hexo!hello github io!经典用法可以在配置文件中设置默认样式，为简单的一句话提供最的简便写法。
-note quote 适合引用一段话
-note info 默认主题色，适合中性的信息
-note warning 默认黄色，适合警告性的信息
-note error/danger 默认红色，适合危险性的信息
-note done/success 默认绿色，适合正确操作的信息...
+        前言今天是第18周的周三，上周末一听说操作系统课设被分配到“使用线程与条件变量实现面包师问题”，以前没学过任何C++并行的知识（毕竟太菜），就立刻去看了看C++文档，发现线程、条件变量、互斥量库一应俱全，这下就开心了。现在课设也做的差不多了，写些感悟要写到博客上。源代码：https://github.com/CirnoTox/OS_project
+问题说明原题 面包师问题面包师有很多面包和蛋...
       
     
   </div>
@@ -466,12 +462,63 @@ note done/success 默认绿色，适合正确操作的信息...
           
           <a class='avatar' href='/'><img src='https://cdn.jsdelivr.net/gh/CirnoTox/Blog-source@main/source/images/CirnoUserIcon.png'></a>
         
-        <time>2021-05-05</time>
+        <time>2021-06-28</time>
         
       </div>
       
         <div>
-          <a class='readmore' href='/2021/05/05/Hello-hexo-and-github-io/'>
+          <a class='readmore' href='/2021/06/28/OS-project/'>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
+      <a href="/2021/06/03/MOS-Problems/">
+        MOS_Problems
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        Following answers are for reference only.
+Introduction
+What are the two main functions of an operating system?
+
+Provding user programs with a better, simpler, cleaner model of the computer.
+Handlin...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+          
+          <a class='avatar' href='/'><img src='https://cdn.jsdelivr.net/gh/CirnoTox/Blog-source@main/source/images/CirnoUserIcon.png'></a>
+        
+        <time>2021-06-03</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2021/06/03/MOS-Problems/'>
             Read More
           </a>
         </div>
@@ -491,8 +538,7 @@ note done/success 默认绿色，适合正确操作的信息...
   
 
 
-    
-  
+	
 </div>
 <aside class='l_side'>
   
@@ -611,14 +657,14 @@ note done/success 默认绿色，适合正确操作的信息...
   // header 这里无论是否开启pjax都需要
   var l_header=document.getElementById("l_header");
   
-  l_header.classList.add("show");
+  l_header.classList.remove("show");
   
   
     // cover
     var cover_wrapper=document.querySelector('.cover-wrapper');
     
-    cover_wrapper.id="none";
-    cover_wrapper.style.display="none";
+    cover_wrapper.id="half";
+    cover_wrapper.style.display="";
     
   
 </script>
