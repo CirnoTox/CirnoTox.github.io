@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>OS_project源码详细说明</title>
+      <link href="2021/07/01/OS-project-2th/"/>
+      <url>2021/07/01/OS-project-2th/</url>
+      
+        <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>自己太菜，别人课设早都完成了，今天的机房就我一个人，真是安静啊，只有键盘的敲击声和空调的白噪音。分部的介绍请见上一篇文章，本片将详细介绍下我操作系统课设的源码架构。最后也会贴一部分到课设报告上。</p><h1 id="主函数"><a href="#主函数" class="headerlink" title="主函数"></a>主函数</h1><p>主函数主要由以下部分组成：</p><ol><li>初始化各个全局变量</li><li>获取输入数据</li><li>创建和join各个顾客与销售员线程</li><li>输出数据<h2 id="初始化的全局变量"><a href="#初始化的全局变量" class="headerlink" title="初始化的全局变量"></a>初始化的全局变量</h2>全局变量有：全局剩余面包蛋糕<code>bread``cake</code>，顾客线程用于数据存入的互斥量<code>customerDataMutex</code>,用于确定一对顾客和销售者销售是否结束的互斥量<code>customerSaleFinishMutex</code>，条件变量<code>customerSaleFinishCV</code>，条件<code>customerIdSaleFinished</code>，以及销售者线程用于数据读取的互斥量<code>salerMutex</code>.<h2 id="创建与合并线程"><a href="#创建与合并线程" class="headerlink" title="创建与合并线程"></a>创建与合并线程</h2>使用两个<code>vector&lt;thread&gt;</code>，可以将它们理解为动态可变的、类型为线程的数组。之后通过两个<code>for</code>循环创建线程，循环中对<code>vector&lt;thread&gt;</code>调用<code>emplace_back()</code>，理解为向数组末端添加数据，而这个添加的数据是<code>thread</code>，也就创建了线程，第二个参数代表给线程传入的参数。每创建完一个线程会等待极短的时间，保证后面顾客线程添加数据的顺序，创建完成后两个<code>for</code>对线程数组中的所有线程调用合并函数<code>join</code>。</li></ol><h1 id="顾客线程"><a href="#顾客线程" class="headerlink" title="顾客线程"></a>顾客线程</h1><ol><li>顾客生成数据并添加数据</li><li>顾客线程等待条件变量成立后离开<h2 id="生成添加数据"><a href="#生成添加数据" class="headerlink" title="生成添加数据"></a>生成添加数据</h2></li><li>上锁</li><li>随机数生成数据</li><li>向数据队列添加数据</li><li>解锁<br>这部分内容在上一篇都基本讨论过了，就不再赘述</li></ol><h1 id="消费者线程"><a href="#消费者线程" class="headerlink" title="消费者线程"></a>消费者线程</h1><p>while(1)<br>{<br>    1. 等待随机一端时间模拟销售花费的时间<br>    2. 上锁（因为要从队列取数据了，保证互斥访问）<br>    3. 取数据，判断数据情况，对全局数据做操作<br>    4. 提醒顾客离开<br>    5. 解锁<br>}</p><h2 id="提醒顾客离开"><a href="#提醒顾客离开" class="headerlink" title="提醒顾客离开"></a>提醒顾客离开</h2><p>如果这里不是很有把握，可以对代码做些修改进行测试。比如，可以在从队列取出数据时，将<code>cake``bared``customerId</code>数据存入一个新的数组中，全部结束后，对数据重新进行计算，看看是不是符合规定。</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> OS_project </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>OS_project</title>
       <link href="2021/06/28/OS-project/"/>
       <url>2021/06/28/OS-project/</url>

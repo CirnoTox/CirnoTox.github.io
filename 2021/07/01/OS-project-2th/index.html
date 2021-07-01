@@ -22,7 +22,9 @@
 
   <!-- 页面元数据 -->
   
-  <title>CirnoTox Blog</title>
+  <title>OS_project源码详细说明 - CirnoTox Blog</title>
+  
+    <meta name="keywords" content="OS_project">
   
 
   
@@ -355,7 +357,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       <div id="l_cover">
   
     
-        <div id="full" class='cover-wrapper list featured' style="display: none;">
+        <div id="full" class='cover-wrapper post featured' style="display: none;">
           
             <div id='cover-backstretch'></div>
           
@@ -416,44 +418,239 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
         <div class="body-wrapper" id="pjax-container">
           
 
-
 <div class='l_main'>
+  <article class="article post white-box reveal md shadow article-type-post" id="post" itemscope itemprop="blogPost">
   
-    <section class="post-list">
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-    </section>
+
+
   
+  <div class="article-meta" id="top">
+    
+    
+    
+      <h1 class="title">
+        OS_project源码详细说明
+      </h1>
+      <div class='new-meta-box'>
+        
+          
+            
+<div class='new-meta-item author'>
+  <a class='author' href="/" rel="nofollow">
+    <img no-lazy src="https://cdn.jsdelivr.net/gh/CirnoTox/Blog-source@main/source/images/CirnoUserIcon.png">
+    <p>CirnoTox</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+
+          
+        
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
+    <p>发布于：Jul 1, 2021</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  <div class="new-meta-item browse leancloud">
+    <a class='notlink'>
+      
+      <div id="lc-pv" data-title="OS_project源码详细说明" data-path="/2021/07/01/OS-project-2th/">
+        <i class="fas fa-eye fa-fw" aria-hidden="true"></i>
+        <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span>
+        次浏览
+      </div>
+    </a>
+  </div>
+
+
+          
+        
+      </div>
+    
+  </div>
+
+
+  
+  
+  <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>自己太菜，别人课设早都完成了，今天的机房就我一个人，真是安静啊，只有键盘的敲击声和空调的白噪音。分部的介绍请见上一篇文章，本片将详细介绍下我操作系统课设的源码架构。最后也会贴一部分到课设报告上。</p>
+<h1 id="主函数"><a href="#主函数" class="headerlink" title="主函数"></a>主函数</h1><p>主函数主要由以下部分组成：</p>
+<ol>
+<li>初始化各个全局变量</li>
+<li>获取输入数据</li>
+<li>创建和join各个顾客与销售员线程</li>
+<li>输出数据<h2 id="初始化的全局变量"><a href="#初始化的全局变量" class="headerlink" title="初始化的全局变量"></a>初始化的全局变量</h2>全局变量有：全局剩余面包蛋糕<code>bread``cake</code>，顾客线程用于数据存入的互斥量<code>customerDataMutex</code>,用于确定一对顾客和销售者销售是否结束的互斥量<code>customerSaleFinishMutex</code>，条件变量<code>customerSaleFinishCV</code>，条件<code>customerIdSaleFinished</code>，以及销售者线程用于数据读取的互斥量<code>salerMutex</code>.<h2 id="创建与合并线程"><a href="#创建与合并线程" class="headerlink" title="创建与合并线程"></a>创建与合并线程</h2>使用两个<code>vector&lt;thread&gt;</code>，可以将它们理解为动态可变的、类型为线程的数组。之后通过两个<code>for</code>循环创建线程，循环中对<code>vector&lt;thread&gt;</code>调用<code>emplace_back()</code>，理解为向数组末端添加数据，而这个添加的数据是<code>thread</code>，也就创建了线程，第二个参数代表给线程传入的参数。每创建完一个线程会等待极短的时间，保证后面顾客线程添加数据的顺序，创建完成后两个<code>for</code>对线程数组中的所有线程调用合并函数<code>join</code>。</li>
+</ol>
+<h1 id="顾客线程"><a href="#顾客线程" class="headerlink" title="顾客线程"></a>顾客线程</h1><ol>
+<li>顾客生成数据并添加数据</li>
+<li>顾客线程等待条件变量成立后离开<h2 id="生成添加数据"><a href="#生成添加数据" class="headerlink" title="生成添加数据"></a>生成添加数据</h2></li>
+<li>上锁</li>
+<li>随机数生成数据</li>
+<li>向数据队列添加数据</li>
+<li>解锁<br>这部分内容在上一篇都基本讨论过了，就不再赘述</li>
+</ol>
+<h1 id="消费者线程"><a href="#消费者线程" class="headerlink" title="消费者线程"></a>消费者线程</h1><p>while(1)<br>{<br>    1. 等待随机一端时间模拟销售花费的时间<br>    2. 上锁（因为要从队列取数据了，保证互斥访问）<br>    3. 取数据，判断数据情况，对全局数据做操作<br>    4. 提醒顾客离开<br>    5. 解锁<br>}</p>
+<h2 id="提醒顾客离开"><a href="#提醒顾客离开" class="headerlink" title="提醒顾客离开"></a>提醒顾客离开</h2><p>如果这里不是很有把握，可以对代码做些修改进行测试。比如，可以在从队列取出数据时，将<code>cake``bared``customerId</code>数据存入一个新的数组中，全部结束后，对数据重新进行计算，看看是不是符合规定。</p>
+
+  
+  
+    
+    <div class='footer'>
+      
+      
+      
+        <div class='copyright'>
+          <blockquote>
+            
+              
+                <p>博客内容遵循 署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</p>
+
+              
+            
+              
+                <p>本文永久链接是：<a href=https://cirnotox.github.io/2021/07/01/OS-project-2th/>https://cirnotox.github.io/2021/07/01/OS-project-2th/</a></p>
+              
+            
+          </blockquote>
+        </div>
+      
+      
+    </div>
+  
+  
+    
+
+
+  <div class='article-meta' id="bottom">
+    <div class='new-meta-box'>
+      
+        
+          
+<div class='new-meta-item author'>
+  <a class='author' href="/" rel="nofollow">
+    <img no-lazy src="https://cdn.jsdelivr.net/gh/CirnoTox/Blog-source@main/source/images/CirnoUserIcon.png">
+    <p>CirnoTox</p>
+  </a>
+</div>
+
+        
+      
+        
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-07-01T08:40:43+08:00">
+  <a class='notlink'>
+    <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
+    <p>更新于：Jul 1, 2021</p>
+  </a>
+</div>
+
+        
+      
+        
+          
+  
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/OS-project/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>OS_project</p></a></div>
+
+
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
+    
+      
+        <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://cirnotox.github.io/2021/07/01/OS-project-2th/&title=OS_project源码详细说明 - CirnoTox Blog&summary="
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/qq.png" class="lazyload" data-srcset="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/qq.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://cirnotox.github.io/2021/07/01/OS-project-2th/&title=OS_project源码详细说明 - CirnoTox Blog&summary="
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/qzone.png" class="lazyload" data-srcset="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/qzone.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="http://service.weibo.com/share/share.php?url=https://cirnotox.github.io/2021/07/01/OS-project-2th/&title=OS_project源码详细说明 - CirnoTox Blog&summary="
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/weibo.png" class="lazyload" data-srcset="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/weibo.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=">
+          
+        </a>
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+
+
+        
+      
+    </div>
+  </div>
+
+
+  
+  
+
+  
+    <div class="prev-next">
+      
+      
+        <a class='next' href='/2021/06/28/OS-project/'>
+          <p class='title'>OS_project<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>前言今天是第18周的周三，上周末一听说操作系统课设被分配到“使用线程与条件变量实现面包师问题”，以前没学过任何C++并行的知识（毕竟太菜），就立刻去看了看C++文档，发现线程、条件变量、互斥量库...</p>
+        </a>
+      
+    </div>
+  
+</article>
+
+
+  
+
+  <article class="post white-box reveal shadow" id="comments">
+    <p ct><i class='fas fa-comments'></i> 评论</p>
+    
+    <div id="valine_container" class="valine_thread">
+  <i class="fas fa-cog fa-spin fa-fw fa-2x"></i>
+</div>
+
+  </article>
+
+
+
+
+
+
 </div>
 <aside class='l_side'>
   
@@ -461,102 +658,28 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     
     
 
-<section class="widget blogger shadow desktop mobile">
-  <div class='content'>
-    
-      
-        <a class='avatar flat-box rectangle' href='/'>
-          <img no-lazy src='https://cdn.jsdelivr.net/gh/CirnoTox/Blog-source@main/source/images/CirnoUserIcon.png'/>
-        </a>
-      
-    
-    
-      <div class='text'>
-        
-          <h2>CirnoTox</h2>
-        
-        
-        
-      </div>
-    
-    
-      <div class="social-wrapper">
-        
-          
-            <a href="/about/"
-              class="social fas fa-info-circle flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-              
-            </a>
-          
-        
-          
-            <a href="mailto:zixiaochen50@gmail.com"
-              class="social fas fa-envelope flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-              
-            </a>
-          
-        
-          
-            <a href="https://github.com/CirnoTox"
-              class="social fab fa-github flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-              
-            </a>
-          
-        
-          
-            <a href="http://music.163.com/playlist?id=6748454327&amp;userid=400940159"
-              class="social fas fa-headphones-alt flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-              
-            </a>
-          
-        
-      </div>
-    
-  </div>
-</section>
 
-  
 
-  
-    
-    
-
-  
-
-  
-    
-    
-  
-
-  <section class="widget tagcloud shadow desktop mobile">
+  <section class="widget toc-wrapper shadow desktop mobile" id="toc-div" >
     
   <header>
     
-      <a href='/blog/tags/'><i class="fas fa-tags fa-fw" aria-hidden="true"></i><span class='name'>热门标签</span></a>
+      <i class="fas fa-list fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
     
   </header>
 
 
     <div class='content'>
-      <a href="/tags/OS-project/" style="font-size: 24px; color: #555">OS_project</a> <a href="/tags/Operating-System/" style="font-size: 14px; color: #999">Operating_System</a> <a href="/tags/helloworld/" style="font-size: 14px; color: #999">helloworld</a>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9A%84%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F"><span class="toc-text">初始化的全局变量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E4%B8%8E%E5%90%88%E5%B9%B6%E7%BA%BF%E7%A8%8B"><span class="toc-text">创建与合并线程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E6%B7%BB%E5%8A%A0%E6%95%B0%E6%8D%AE"><span class="toc-text">生成添加数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8F%90%E9%86%92%E9%A1%BE%E5%AE%A2%E7%A6%BB%E5%BC%80"><span class="toc-text">提醒顾客离开</span></a></li></ol>
     </div>
   </section>
 
 
   
 
-  
-
 
 </aside>
+
 
 
 		  
@@ -565,8 +688,8 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
 <script>
   window.pdata={}
-  pdata.ispage=false;
-  pdata.postTitle="";
+  pdata.ispage=true;
+  pdata.postTitle="OS_project源码详细说明";
   pdata.commentPath="";
   pdata.commentPlaceholder="";
   // header 这里无论是否开启pjax都需要
